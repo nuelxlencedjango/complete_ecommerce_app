@@ -1,0 +1,95 @@
+{%extends 'layout/main.html' %}
+
+{% block content %}
+<style>
+    a{
+        text-decoration: none;
+    }
+    a:hover{
+        text-decoration: underline;
+    }
+</style>
+<div class="py-3 bg-primary">
+    <div class="container">
+        <a href="{% url 'products:home' %}" class="text-white">Home /</a>
+        <a href="{% url 'products:cart' %}" class="text-white">cart /</a>
+    </div>
+</div>
+
+
+<div class="py-5">
+<div class="container">
+    <form action="">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-body cartdata">
+                    {% if cart %}
+                    {% for item in cart %}
+                    <div class="row product_data">
+                        <div class="col-md-1 my-auto">
+                            <img src="{{item.product.img.url}}" height="70px" width="70px" alt="">
+                        </div>
+                        <div class="col-md-3 my-auto">
+                            <h6>{{item.product.name}}</h6>
+                        </div>
+                        <div class="col-md-2 my-auto">
+                            <h6>$ {{item.product.selling_price |stringformat:'d'}}</h6>
+                        </div>
+
+                        <!--<div class="col-md-3 my-auto">
+                            <h6  class="input-text total text-center text-center">$ {{item.product.selling_price |stringformat:'d'}}</h6>
+                            <span class="float-end">total:<input type="text"  name="total" class="input-text total text-center text-center" value="{{item.product.selling_price |stringformat:'d'}}"  readonly></span>
+                        </div>-->
+
+                        <div class="col-md-2 my-auto">
+                            <input type="hidden" class="prod_id" value="{{ item.product_id}}">
+                            {% csrf_token %}
+                            
+                            
+                            {% if item.product.quantity >= item.product_qty %}
+                            <label for="quantity">Quantity</label>
+                            <div class="input-group text-center mb-3" style="width: 130px;">
+                                <button class="input-group-text changeQuantity decrement-btn ">-</button>
+                                <input type="text" name="quantity" class="form-control qty-input text-center text-center" value="1">
+                                <button class="input-group-text changeQuantity increment-btn">+</button>
+
+                            </div>
+                            {% else %}
+                            <h6>Out of stock</h6>
+                            {% endif %}
+                    
+                        </div>
+                        <div class="col-md-2 my-auto">
+                            <button class="btn btn-danger delete-cart-item"><i class="fa fa-trash"></i> Remove</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <h4>your cart is empty</h4>
+                    {% endif %}
+        
+                    <div class="col-md-12">
+                        <hr>
+                        <h3>description</h3>
+                        <p class="mt-3">{{product.description}}</p>
+                    </div>
+                </div>
+                </form>
+             
+
+            </div>
+        </div>
+ 
+
+
+
+
+<script>
+    
+      
+    
+</script>
+
+
+{% endblock %}

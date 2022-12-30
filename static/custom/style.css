@@ -1,0 +1,80 @@
+*{
+    box-sizing: border-box;
+    transition: all .5s;
+}
+section .contact-info{
+    background-color: black;
+    height: 30px;
+}
+.contact-info ul{
+    display: flex;
+
+
+  
+    animation-duration: 3s;
+    animation-name: slidein;
+    
+}
+.contact-info ul li{
+   
+    padding: 3px 0;
+    font-size: 14px;
+    color: #FF6F61;
+    background: #000000;
+    list-style: none;
+    transition: 3s;
+   
+}
+.contact-info ul li.right{
+    flex: 1;
+    text-align: right;
+    padding-right: 20px;
+
+}
+.navbar{
+    background-color: #FF6F61;
+
+
+    /*animation-duration: 3s;
+    animation-name: slidein;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;*/
+}
+.navbar ul li a{
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Times New Roman', Times, serif;
+    text-transform: uppercase;
+}
+.right-side{
+    flex: 1;
+    text-align: right;
+   
+}
+
+
+
+/*@keyframes slidein {
+    from {
+      margin-left: 100%;
+      width: 300%;
+    }
+  
+    to {
+      margin-left: 0%;
+      width: 100%;
+    }
+  }
+*/
+  
+  @keyframes slidein {
+    from {
+      margin-left: 100%;
+      width: 300%;
+    }
+  
+    to {
+      margin-left: 0%;
+      width: 100%;
+    }
+  }

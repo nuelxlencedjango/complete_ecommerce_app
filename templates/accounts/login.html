@@ -1,0 +1,72 @@
+{%extends 'layout/main.html' %}
+
+
+{% block content %}
+{% load static %}
+
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+
+
+
+
+
+{% for message in messages %}
+<h3>{{ message}}</h3>
+{% endfor%}
+
+              
+
+
+  <div id="form2" class="container form2" style="width: 900px;">
+    <h3>Login Form</h3>
+      <form action="{% url 'accounts:login' %}" method="POST" class="row g-3">
+        
+          {% csrf_token %}
+        
+          <div class="error">
+            {% if error %}
+         <h3>   {{ error }}</h3>
+            {% endif %}
+         
+       
+          </div>
+          <div class="col-md-6 form2">
+              {{ form.username|as_crispy_field }}
+          </div>
+          
+          <div class="col-md-6 form4">
+            {{ form.password|as_crispy_field }}
+        </div>
+       
+    
+          <div class="col-12">
+       <input type="submit" class="btn btn-danger btn-lg" value="submit" >   
+          </div>
+  
+
+         
+   
+    
+    
+    <div class="mt-0">  
+      
+        <div class="d-flex justify-content-center links">
+            Dont Have An Account? <a href="{% url 'accounts:registration' %}"
+            class=" mm-2" > SignUP</a>
+        </div>
+    </div>    
+        </form>
+  
+    </div>
+    
+
+  {% endblock %}
+
+
+
+
+

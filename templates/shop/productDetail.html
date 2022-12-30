@@ -1,0 +1,106 @@
+{%extends 'layout/main.html' %}
+
+{% block content %}
+<style>
+    a{
+        text-decoration: none;
+    }
+    a:hover{
+        text-decoration: underline;
+    }
+</style>
+<div class="py-3 bg-primary">
+    <div class="container">
+        <a href="{% url 'products:home' %}" class="text-white">Home /</a>
+        <a href="{% url 'products:collection' %}" class="text-white">Collection /</a>
+        <a href="{% url 'products:categoryitems' product.category.slug  %}" class="text-white">{{product.category.name}} /</a>
+        <a href="{% url 'products:product_detail' product.category.slug product.slug   %}" class="text-white">{{product.name}}</a>
+    </div>
+</div>
+
+
+<div class="py-5">
+<div class="container">
+    <form action="">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card show product_data">
+               
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            {% if product.tag %}
+                            <label class="product-viewtag" for="">{{product.tag}}</label>
+                            {% endif %}
+                            <img src="{{ product.img.url }}" class="w-100" alt="">
+                        </div>
+                        <div class="col-md-8">
+                            <h2 class="mb-0">
+                                {{ product.name }}
+                                {% if product.trending %}
+                                <label for="" style="font-size: 16px;" class="float-end badge bg-danger trending-tag">trending</label>
+                                {% endif %}
+                            </h2>
+                            <hr>
+                            <label for="" class="me-3" > original price: <s> $ {{product.original_price |stringformat:'d'}}</s></label>
+                            <label for="" class="fw-bold"> selling price: $ <strong style="color: green;" class="sales" id="sales"> {{product.selling_price |stringformat:'d'}} </strong></label>
+                                <span class="float-end">total:<input type="text"  name="total" class="input-text total text-center text-center" value="{{product.selling_price |stringformat:'d'}}"  readonly></span>
+                          
+                            <p class="mt-3">
+                                {{ product.small_description }}
+                            </p>
+                            <hr>
+                            {% if product.quantity > 0 %}
+                            <label for="" class="bg-success badge"> in stock</label>
+                            {% else %}
+                            <label for="" class="bg-success badge"> out of stock stock</label>
+                            {% endif %}
+                            <div class="row mt-2">
+                                <div class="col-md-3">
+                                   {% csrf_token %}
+                                   
+                                    <input type="hidden" name="prod_id" value="{{ product.id }}" class="prod_id">
+                                    <label class="quantity">quantity</label>
+                                    <div class="input-group text-center mb-3" style="width: 130px;">
+                                        <button class="input-group-text decrement-btn ">-</button>
+                                        <input type="text" name="quantity" class="form-control qty-input text-center text-center" value="1">
+                                        <button class="input-group-text increment-btn">+</button>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <br>
+                                    
+                                    {% if product.quantity > 0 %}
+                                    <button class="btn btn-primary me-3 float-start addToCart" type="button">add to cart <i class=" fa fa-shopping-cart"></i></a>
+                                    {% endif %}
+                                    <button class="btn btn-success me-3  addToWishlist float-start" type="button">add to wishlist <i class=" fa fa-heart"></i></button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr>
+                        <h3>description</h3>
+                        <p class="mt-3">{{product.description}}</p>
+                    </div>
+                </div>
+                </form>
+             
+
+            </div>
+        </div>
+    </div>
+ 
+</div>
+</div>
+
+<script>
+    
+      
+    
+</script>
+
+
+{% endblock %}
