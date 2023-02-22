@@ -18,6 +18,9 @@ urlpatterns = [
      path('wishes',views.wishList , name='wishes'),
     path('addTowishList',views.WishItems, name='addTowishList'), 
     path('delete_wishlist_item',views.deleteWishListItem, name='delete_wishlist_item'), 
+
+    path('checkout',views.checkoutItems , name='checkout'),
+    path('place_order', views.placeOrder, name='place_order'),
   
 ]
 

@@ -51,8 +51,18 @@ section .contact-info{
     text-align: right;
    
 }
+.checkoutform label{
+  font-size: 14px !important;
+  font-weight: 600;
 
-
+}
+.checkoutform input{
+  font-size: 14px;
+}
+  
+.card{
+  height: 500px;
+ } 
 
 /*@keyframes slidein {
     from {

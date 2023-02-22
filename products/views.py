@@ -3,8 +3,11 @@ from django.contrib import messages
 from .models import *
 from django.http.response import JsonResponse
 from accounts .models import *
+from django.contrib import  messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
+import random
+from .forms import *
+
 
 def indexPage(request):
     return render (request, 'shop/index.html')
@@ -176,3 +179,102 @@ def deleteWishListItem(request):
             return JsonResponse({'status':'Login to continue'})  
                        
     return redirect('products:home')
+
+
+
+@login_required(login_url='accounts:login')
+def checkoutItems(request):
+    rawcart = Cart.objects.filter(user=request.user)
+
+    #checking if quantity in the cart is greater than the available quantity
+    for item in rawcart:
+        if item.product_qty > item.product.quantity:
+            Cart.objects.delete(id = item.id)
+
+
+    cartItems =Cart.objects.filter(user = request.user)
+    #item price and total price
+    total_price =0
+    for item in cartItems:
+        total_price = total_price + item.product.selling_price * item.product_qty   
+
+    context={"cartItems":cartItems,"total_price":total_price}
+    return render(request,'shop/checkout.html', context)
+
+
+
+@login_required(login_url='accounts:login')
+def placeOrder(request):
+    if request.method == "POST":
+        order = Order()
+        order.user = request.user
+        order.first_name = request.POST.get('first_name')
+        order.last_name = request.POST.get('last_name')
+        order.email = request.POST.get('email')
+        order.phone = request.POST.get('phone')
+        order.address = request.POST.get('address')
+        order.city = request.POST.get('city')
+        order.state = request.POST.get('state')
+        order.country = request.POST.get('country')
+        order.pin_code = request.POST.get('pin_code')
+        order.payment_mode = request.POST.get('payment_mode')
+        
+        #total cart price
+        cart = Cart.objects.filter(user = request.user)
+        cart_total_price = 0 
+        for item in cart:
+            cart_total_price += item.product.selling_price * item.product_qty
+
+        order.total_price = cart_total_price  
+
+        #tracking no
+        track_no ='nuelMobiles'+str(random.randint(1111111,9999999))  
+        while Order.objects.filter(tracking_no=track_no) is None:
+            track_no ='nuelMobiles'+str(random.randint(1111111,9999999))
+
+        order.tracking_no =track_no
+
+        order.save()   
+
+        #orderitem products
+        order_item_products = Cart.objects.filter(user = request.user)
+        for item in order_item_products:
+            OrderItem.objects.create(user=request.user, order = order, product=item.product, price =item.product.selling_price, 
+                                     quantity =item.product_qty) 
+            
+        # reducing product quantity from available stock
+        order_product =Product.objects.filter(id =item.product.id).first() 
+        order_product.quantity = order_product.quantity -item.product_qty
+        order_product.save()
+
+        #to clear cart items
+
+        Cart.objects.filter(user=request.user).delete()
+
+        messages.info(request,"Your order was successfully placed")
+        return redirect('/')
+
+
+
+#to be deleted
+@login_required(login_url='accounts:login')
+def placeOrdersss(request):
+    form = OrderForm()
+    if request.method == "POST":
+        form = OrderForm(request.POST)
+
+        if form.is_valid():
+            user = request.user
+            userDetail = form.save(commit=False)
+            userDetail.user = user
+            userDetail.save()
+            messages.info(request,"Your order was successfully placed")
+            
+            return redirect('/')
+            
+        context ={'form':form}
+        return render(request, 'placeorder.html', context)
+    
+
+    context ={'form':form}
+    return render(request, 'placeorder.html', context)
