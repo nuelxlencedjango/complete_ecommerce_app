@@ -21,6 +21,21 @@ urlpatterns = [
 
     path('checkout',views.checkoutItems , name='checkout'),
     path('place_order', views.placeOrder, name='place_order'),
-  
+    
+    path('payment_confirmed/', views.payment_confirmation, name='payment_confirmed'),
+   path('my_orders/', views.myOrders, name='my_orders'),
+   
+    path('view_orders/<str:tk_no>/', views.myOrdersList, name='view_orders'),
+
+    path('proceed-to-pay/', views.razorpaycheckout, name='proceed-to-pay'),
+
+
+    path('newL/', views.newLink, name='newL'),
+     path('itmD/<int:pk>/', views.itmDetails, name='itmD'),
+     path('prod-request/',views.productReq, name="prod-request"),
+     path('peoduct_list/', views.productListAjax,name='peoduct_list'),
+
+    path('search-product/', views.productSearch,name='search-product'), 
+    
 ]
 

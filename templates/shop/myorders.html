@@ -1,0 +1,90 @@
+
+
+
+{%extends 'layout/main.html' %}
+
+{% block content %}
+{% load static %}
+
+
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<div class="card-header">
+    <h3>my orders</h3>
+</div>
+
+<table id="customers">
+  <tr>
+    <th>Order date</th>
+    <th>Tracking No</th>
+    <th>Tottal price</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+  {% for order in paid_orders %}
+  <tr>
+    <td>{{order.created_at}}</td>
+    <td>{{order.tracking_no}}</td>
+    <td>{{order.total_price}}</td>
+    <td>{{order.status}}</td>
+    <td><a href="{% url 'products:view_orders' order.tracking_no %}">View</a></td>
+  </tr>
+  {% endfor %}
+ 
+
+ 
+</table>
+
+
+
+
+
+<!--<table id="customers">
+    <tr>
+      <th>Order date</th>
+      <th>Tracking No</th>
+      <th>Tottal price</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+    {% for order in paid_orders %}
+    <tr>
+      <td>{{order.product.name}}</td>
+      <td>{{order.price}}</td>
+      <td>{{order.quantity}}</td>
+     
+      <td><a href="">View</a></td>
+    </tr>
+    {% endfor %}
+   
+  
+   
+  </table>-->
+
+
+{% endblock %}

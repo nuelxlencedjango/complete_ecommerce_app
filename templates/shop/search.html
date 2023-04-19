@@ -1,19 +1,23 @@
-{% extends 'layout/main.html' %}
-
-
+{%extends 'layout/main.html' %}
 
 {% block content %}
-{% include 'includes/slider.html'%}
+<style>
+    a{
+        text-decoration: none;
+    }
+    a:hover{
+        text-decoration: underline;
+    }
+</style>
 
-<h2>e-commerce app</h2>
 
 
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-         <h3>Trending Products</h3>
+         
             <div class="row">
-                {% for cat in trending %}
+                {% for cat in products %}
                 <div class="col-md-3">
                     <div class="card">
                       <a href="{% url 'products:product_detail' cat.category.slug  cat.slug %}">
@@ -25,18 +29,7 @@
                             <h4 class="text-center">{{cat.name}}</h4>
                             <span class="float-start">old :$ <s>{{ cat.original_price | stringformat:'d'}}</s></span>
                             <span class="float-end"> new :$ {{ cat.selling_price|stringformat:'d'}}</span>
-                          
-                            
-                            <span class="mb-2">
-                                {% if item.quantity > 0 %}
-                                <button type="button" class="btn btn-primary btn-sm me-3 float-end addToCart">Add to Cart</button>
-                                {% else %}
-                                <button type="button" class="btn btn-danger btn-sm me-3 float-start" disabled>Out Of Stock</button>
-                                {% endif %}
-                            </span>   
-                          
                         </div>
-                       
                       </a>
                     </div>
                 </div>
@@ -47,4 +40,4 @@
     </div>
 </div>
 
-{% endblock content %}
+{% endblock %}

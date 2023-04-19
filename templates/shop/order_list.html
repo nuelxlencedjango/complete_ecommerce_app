@@ -1,0 +1,121 @@
+
+
+
+{%extends 'layout/main.html' %}
+
+{% block content %}
+{% load static %}
+{% load mathfilters %}
+
+
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<div class="card-header">
+    <h3>my orders</h3>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h3 class="mb-0">order view <span><a href="{% url 'products:my_orders' %}" class="btn btn-danger float-end"><i class="fa fa-reply"></i> Back</a></span></h3>
+                    
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>Shipping Details</h4>
+                            <hr>
+                            <label class="mt-2" for="">First Name</label>
+                            <hr>
+                            <div class="border p-1">{{order.first_name}}</div>
+                            <label class="mt-2" for="">last Name</label>
+                            <hr>
+                            <div class="border p-1">{{order.last_name}}</div>
+                            <label class="mt-2" for="">email</label>
+                            <hr>
+                            <div class="border p-1">{{order.email}}</div>
+                            <label class="mt-2" for="">contact_no</label>
+                            <hr>
+                            <div class="border p-1">{{order.contact_no}}</div>
+                            <label class="mt-2" for="">Address</label>
+                            <hr>
+                            <div class="border p-1">
+                                {{order.address}}
+                                {{order.city}}
+                                {{order.state}}
+                                {{order.country}}
+                            </div>
+                            <label class="mt-2" for="">zip code</label>
+                            <hr>
+                            <div class="border p-1">{{order.pin_code}}</div>
+                           
+                        </div>
+                        <div class="col-md-6">
+                            <table id="customers">
+                                <tr>
+                                  <th>product name</th>
+                                  <th>quantity</th>
+                                  <th>price</th>
+                                  <th>amount</th>
+                                  <th>image</th>
+                                 
+                                </tr>
+                                {% for  item in orderitems %}
+                                <tr>
+                                  <td>{{ item.product.name}}</td>
+                                  <td>{{ item.quantity}}</td>
+                                  <td>{{ item.price}} </td>
+                                  <td>{{ item.price|mul:item.quantity}} </td>
+                                  
+                                 
+                                  <td><img src="{{ item.product.img.url}}" height="50px" width="50px" alt=""></td>
+                                  
+                                </tr>
+                               
+                                {% endfor %}
+                               
+                               
+                               
+                              </table>
+                              <h4 class="border p-3">Total Amount: <span class="float-end">$ {{order.total_price}} </span></h4>
+                             <h6 class="border p-2">Payment mode: {{order.payment_mode}}</h6>
+                             <h6 class="border p-2">Order Status: {{order.status}}</h6>
+                             <h6 class="border p-2">Tracking No: {{order.tracking_no}}</h6>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

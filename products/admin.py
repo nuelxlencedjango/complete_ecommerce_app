@@ -9,3 +9,8 @@ admin.site.register(Cart)
 admin.site.register(WishList)
 admin.site.register(Order)
 admin.site.register(OrderItem)
+
+
+
+admin.site.register(Ordered)
+admin.site.register(ProductItems)

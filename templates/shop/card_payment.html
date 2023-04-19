@@ -1,0 +1,149 @@
+
+{%extends 'layout/main.html' %}
+
+{% block content %}
+{% load static %}
+
+<style>
+    a{
+        text-decoration: none;
+    }
+    a:hover{
+        text-decoration: underline;
+    }
+
+</style>
+
+
+
+
+<style>
+
+    .main-content{
+      margin-top: 50px;
+      width: 80%;
+      margin: auto;
+    }
+    
+    
+    
+    .main-content h2{
+      text-align: center;
+      color: #dc3545;
+      font-size: 3em;
+    
+    }
+    .main-content label{
+      font-size: 1.5em;
+      color: #45ccb8;
+    }
+    .main-content input[type=text],input[type=email],input[type=number]{
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+    }
+    .main-content input[type=submit]{
+      background: #ff3838;
+      width: 100%;
+      /*font-size: 2em;*/
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .main-content input[type=submit]:hover{
+      background: green;
+     
+    }
+    </style>
+    {% if user %}
+<section class="main-content">
+    <h2>Service Payment </h2>
+
+    <form action="" method="POST" id="payForm">
+ 
+      
+    <label for="">Full Name</label>
+    <input type="text" id="fullname" name="fullname" placeholder="Name on the card"   required>
+    <label for="">Phone number</label>
+    <input type="number" id="phoneNumber" name="phoneNumber" placeholder="Enter the number registered with your bank" required>
+    <label for="">Email</label>
+    <input type="email" id="email" name="email" placeholder="Enter your email .." required>
+    
+    <label for="">Amount</label>
+    <input type="number" id="amount"  name="amount" value="{{ cart_total_price }}" readonly>
+  
+    <input type="submit" value="Continue">
+
+    </form>
+{{form.errors }}
+</section>
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+<script src="/static/js/event.js"></script>
+
+<script>
+
+/*
+
+let total_price = "{{total_price}}";
+let user = "{{request.user}}"
+
+console.log(user)
+
+function makePayment() {
+FlutterwaveCheckout({
+public_key: "FLWPUBK_TEST-7a604ecf4cca1e2f78deb205a2750ac8-X",
+
+tx_ref: "Nuel-" +Math.floor((Math.random()*1000000000)+1),
+amount:document.getElementById("amount").value,
+
+currency: "USD",
+payment_options: "card, mobilemoneyghana, ussd",
+redirect_url: "http://127.0.0.1:8000/payment_confirmed",
+
+meta: {
+  consumer_id: 23,
+  consumer_mac: "92a3-912ba-1192a",
+},
+customer: {
+ 
+  email:document.getElementById("email").value,
+  phone_number:document.getElementById("phoneNumber").value,
+  name:document.getElementById("fullname").value,
+},
+customizations: {
+    title: "Nuel Ecommerce",
+    description: "Payment for the products requested for",  
+  logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
+},
+
+});
+}
+
+*/
+
+</script>
+
+{% endblock %}
+
+{% block script %}
+
+
+{% endblock script %}

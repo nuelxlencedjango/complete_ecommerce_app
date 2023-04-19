@@ -140,3 +140,24 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return '{} - {} - {}'.format(self.user, self.order.id, self.order.tracking_no)
+
+
+ 
+class ProductItems(models.Model):
+    price = models.FloatField(null=False,blank=False)
+    name = models.CharField(max_length=100,null=False,blank=False)
+    img = models.ImageField(upload_to=get_file_path, null=True,blank=True)
+
+    def __str__(self):
+        return self.name
+    
+
+class Ordered(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    price = models.FloatField(null=False,blank=False)
+    product_name = models.CharField(max_length=100,null=False,blank=False)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.product_name
+    

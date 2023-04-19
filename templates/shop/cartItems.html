@@ -1,6 +1,8 @@
 {%extends 'layout/main.html' %}
 
 {% block content %}
+{% load static %}
+
 <style>
     a{
         text-decoration: none;
@@ -17,6 +19,7 @@
     </div>
 </div>
 
+{% if user.is_authenticated %}
 <div class="container mt-3">
     <form action="{% url 'products:place_order' %}" method="POST">
         {% csrf_token %}
@@ -29,36 +32,36 @@
                 <div class="row checkoutform">
                     <div class="col-md-6">
                         <label for="">First Name</label>
-                        <input type="text" name="first_name" class="form-control" required  placeholder="Enter first name" class="form-control">
+                        <input type="text" name="first_name" value="{{ user.first_name}}" class="form-control" required  readonly class="form-control">
                     </div>  
                     <div class="col-md-6">
                         <label for="">Last Name</label>
-                        <input type="text" name="last_name" class="form-control" required  placeholder="Enter last name" class="form-control">
+                        <input type="text" name="last_name" value="{{ user.last_name}}" class="form-control" required  readonly class="form-control">
                     </div> 
                     <div class="col-md-6 mt-2">
                         <label for="">Email</label>
-                        <input type="email" name="email" class="form-control" required  placeholder="Enter email address" class="form-control">
+                        <input type="email" name="email" value="{{ user.email}}" class="form-control" required  readonly class="form-control">
                     </div> 
                     <div class="col-md-6 mt-2">
                         <label for="">Phone</label>
-                        <input type="text" name="phone"  class="form-control" required placeholder="Enter phone number" class="form-control">
+                        <input type="text" name="phone"  value="{{ user.customer.phone }}" class="form-control" required readonly class="form-control">
                     </div> 
                     <div class="col-md-12 mt-2">
                         <label for="">Address</label>
-                        <textarea type="text" name="address" class="form-control" required  placeholder="Enter address" class="form-control"></textarea>
+                        <textarea type="text" name="address" id="phone" class="form-control" required  placeholder="Enter address" class="form-control"></textarea>
                        
                     </div> 
                     <div class="col-md-6 mt-2">
                         <label for="">City</label>
-                        <input type="text" name="city" class="form-control" required  placeholder="Enter city" class="form-control">
+                        <input type="text" name="city" id="city" class="form-control" required  placeholder="Enter city" class="form-control">
                     </div> 
                     <div class="col-md-6 mt-2">
                         <label for="">State</label>
-                        <input type="text" name="state" class="form-control" required  placeholder="Enter state" class="form-control">
+                        <input type="text" name="state" id="state" class="form-control" required  placeholder="Enter state" class="form-control">
                     </div>  
                     <div class="col-md-6 mt-2">
                         <label for="">Pin Code</label>
-                        <input type="text" name="pin_code" class="form-control" required  placeholder="Enter code" class="form-control">
+                        <input type="text" name="pin_code" id="pin_code" class="form-control" required  placeholder="Enter code" class="form-control">
                     </div>
                     <div class="col-md-6 mt-2">
                         <label for="">Country</label>
@@ -66,7 +69,12 @@
                     </div> 
                     <div class="col-md-6 mt-2">
                         <label for="">Payment Mode</label>
-                        <input type="text" name="payment_mode"  class="form-control" required placeholder="payment mode" class="form-control">
+                        <select name="payment_mode" id="">
+                            <option value="cod">Cash on Delivery</option>
+                            <option value="online_payment">Card Payment</option>
+                        </select>
+                        <!--<label for="">Payment Mode</label>
+                        <input type="text" name="payment_mode"  id="payment_mode" class="form-control" required placeholder="payment mode" class="form-control">-->
                     </div> 
                 </div>
             </div>
@@ -99,11 +107,14 @@
                     </tbody>
                 </table>
                 <h6 class="fw-bold">Grand Total 
-                    <span class="float-end">$ {{ total_price | stringformat:'d'}}</span>
+                    <span class="float-end" id="amt">$ {{ total_price | stringformat:'d'}}</span>
                 </h6>
                 <div class="mt-3">
-                    <BUtton type="submit" class="btn btn-success w-100"> COD | Place Order</BUtton>
-                <!--<a href="" class="btn btn-success w-100"> COD | Place Order</a>-->
+                    <BUtton type="submit" class="btn btn-success w-100" id="code" name="online payment">Submit</BUtton>
+                    <!--<BUtton type="submit" class="btn btn-success w-100" id="code" name="online payment"> COD | Place Order</BUtton>
+             
+                <button type="button" id="card-payment" name="online payment" >online payment</button>
+                <input type="button" value="Continue" class="btn btn-primary  w-100 mt-2">-->
                 </div>
                 {% else %}
                 <h4>Your cart is empty</h4>
@@ -115,4 +126,12 @@
     </form>
 </div>
 
+{% endif %}
+
+
 {% endblock %}
+
+{% block script %}
+
+
+{% endblock script %}

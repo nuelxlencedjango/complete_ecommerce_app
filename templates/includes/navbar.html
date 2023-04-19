@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +9,20 @@
    
     
 </head>
+
+<style>
+  .whatsapp-chat{
+    border-radius: 50%;
+    position: fixed;
+    bottom: 10%;
+    left: 3%;
+  }
+</style>
 <body>
-    
+    <a href="https://wa.me/+2348079385255?text=I'm%20inquiring%20about%20the%20ecommerce%20app`">
+      <img src="{% static 'img/whatsapp2.png' %}" width="70px" class="whatsapp-chat" alt="">
+    </a>
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Navbar</a>
@@ -26,7 +39,7 @@
               </li>
 
               <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'products:cart' %}active{% endif %}" href="{% url 'products:cart' %}">cart</a>
+                <a class="nav-link {% if request.resolver_match.url_name == 'products:cart' %}active{% endif %}" href="{% url 'products:cart' %}" >cart</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link {% if request.resolver_match.url_name == 'products:wishes' %}active{% endif %}" href="{% url 'products:wishes' %}">Wishlist</a>
@@ -43,19 +56,22 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 
                   {% if not user.is_authenticated %}
-                  <li><a class="dropdown-item {% if request.resolver_match.url_name == 'products:registration' %}active{% endif %}" href="{% url 'accounts:registration' %}">Registration</a></li>
-                  <li><a class="dropdown-item {% if request.resolver_match.url_name == 'products:login' %}active{% endif %}" href="{% url 'accounts:login' %}">login</a></li>
+                  <li><a class="dropdown-item {% if request.resolver_match.url_name == 'products:registration' %}active{% endif %}" href="{% url 'accounts:registration' %}" style="color: red;">Registration</a></li>
+                  <li><a class="dropdown-item {% if request.resolver_match.url_name == 'products:login' %}active{% endif %}" href="{% url 'accounts:login' %}" style="color: red;">login</a></li>
                   <!--<li><hr class="dropdown-divider"></li>-->
                  {% else %}
 
-                 <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">logout</a></li>
+                 <li><a class="dropdown-item" href="{% url 'accounts:logout' %}" style="color: red;">logout</a></li>
                   {% endif %}
                 </ul>
               </li>
-              
+              <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'products:cart' %}active{% endif %}" href="{% url 'products:newL' %}" >new link</a>
+              </li>
             </ul>
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="d-flex" action="{% url 'products:search-product' %}" method="POST">
+              {% csrf_token %}
+              <input class="form-control me-2" required id="search_item" name="search-items" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
           </div>
@@ -89,5 +105,7 @@
    } 
 </style>
     
+
+
 </body>
 </html>

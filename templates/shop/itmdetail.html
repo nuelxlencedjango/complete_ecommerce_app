@@ -1,0 +1,11 @@
+<h3>product details</h3>
+
+<form action="{% url 'products:prod-request' %}" method="POST">
+    {% csrf_token %}
+    <h1>{{item.name}}</h1>product_name
+   
+    <input type="text" name="product_name" value="{{item.name}}" hidden>
+    <h1>{{item.price}}</h1>
+    <input type="number" name="price" value="{{item.price}}" hidden>
+    <button class="btn btndanger">submit</button>
+</form>
