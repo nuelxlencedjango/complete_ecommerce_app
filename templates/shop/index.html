@@ -24,12 +24,13 @@
                             </div>
                             <h4 class="text-center">{{cat.name}}</h4>
                             <span class="float-start">old :$ <s>{{ cat.original_price | stringformat:'d'}}</s></span>
-                            <span class="float-end"> new :$ {{ cat.selling_price|stringformat:'d'}}</span>
+                            <span class="float-end"> new :$ <span>{{ cat.selling_price|stringformat:'d'}}</span></span>
                           
                             
                             <span class="mb-2">
-                                {% if item.quantity > 0 %}
-                                <button type="button" class="btn btn-primary btn-sm me-3 float-end addToCart">Add to Cart</button>
+                                {% if cat.quantity > 0 %}
+                                <a class="btn btn-primary" href="{% url 'products:product_detail' cat.category.slug  cat.slug %}">View</a>
+                                <!--<button type="button" class="btn btn-primary btn-sm me-3 float-end addToCart">Add to Cart</button>-->
                                 {% else %}
                                 <button type="button" class="btn btn-danger btn-sm me-3 float-start" disabled>Out Of Stock</button>
                                 {% endif %}

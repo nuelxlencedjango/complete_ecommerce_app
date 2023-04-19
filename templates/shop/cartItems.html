@@ -2,6 +2,7 @@
 
 {% block content %}
 {% load static %}
+{% load mathfilters %}
 
 <style>
     a{
@@ -92,6 +93,7 @@
                         <th>Product</th>
                         <th>Quantity</th>
                         <th>Price</th>
+                        <th>Amount</th>
                     </thead>
                     </tr>
                     <tbody>
@@ -101,6 +103,7 @@
                                 <td><img src="{{item.product.img.url }}" height="50px" width="50px" class="me-3"> {{ item.product.name }}</td>
                                 <td>{{ item.product_qty }}</td>
                                 <td>{{ item.product.selling_price | stringformat:'d' }}</td>
+                                <td><b>{{ item.product.selling_price|mul:item.product_qty  }}</b></td>
                             </tr>
                             {% endfor %}
                      

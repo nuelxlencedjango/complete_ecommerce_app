@@ -11,6 +11,7 @@ from .forms import *
 
 def indexPage(request):
     trending =Product.objects.filter(trending=1)
+   # trending =Product.objects.filter(trending=0)
     context={'trending':trending}
     return render (request, 'shop/index.html',context)
 
@@ -67,7 +68,6 @@ def addToCart(request):
             print('productCheck:',productCheck)
             if productCheck:
                 if Cart.objects.filter(user =request.user.id, product_id =prod_id):
-                    print('yes, it exists there!')
                     return JsonResponse({'status':'Product already exists'})
 
                 else:
@@ -89,6 +89,7 @@ def addToCart(request):
 
     else:
         return redirect('/')                 
+
 
                                        
 @login_required(login_url='accounts/login')

@@ -61,9 +61,17 @@ section .contact-info{
 }
   
 .card{
-  height: 500px;
- } 
+  height: 300px !important;
+  margin-top: 30px !important;
 
+
+ } 
+.float-end span{
+  color: #FF6F61;
+  font-size: 18px;
+  font-family: 'Times New Roman', Times, serif;
+  font-family: 800;
+}
 /*@keyframes slidein {
     from {
       margin-left: 100%;
