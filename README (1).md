@@ -21,6 +21,7 @@ This app will have the following functionalities.
 - Registration, Authentication and  Authorization. 
 - Search functionality. Single product and category search.
 - Cart functionality.Add to cart,increase/decrease the quantity and price simultaneously,availabe and out of stock indications.
+- Category selection and search
 - Wishlist functionality. add and remove from wishlist.
 - Checkout functionality.Total amount and the number of items selected.
 - Updation functionality - change quantity and remove an item
